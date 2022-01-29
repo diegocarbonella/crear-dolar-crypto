@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+
+<script >
+
+(async function(){
+
+    provider = window.ethereum;
+	accounts = await provider.request({method: 'eth_requestAccounts'});
+	account = accounts[0];
+
+    provider = new ethers.providers.Web3Provider(window.ethereum, 31337); //el numero es el chainid de hardhat
+    
+    // The MetaMask plugin also allows signing transactions to
+    // send ether and pay to change state within the blockchain.
+    // For this, you need the account signer...
+    signer = provider.getSigner();
+    
+    url = '/artifacts/contracts/PodemosCoin.sol/PodemosCoin.json'
+    
+    contractMeta = await fetch (url).then( r => r.json() )
+    
+    contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
+
+    destino = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
+    
+    contract = new ethers.Contract(contractAddress, contractMeta.abi, signer);
+
+    saldo = await contract.balanceOf(accounts[0]);
+
+    console.log({saldo:ethers.utils.formatEther(saldo)});
+
+    tx = await contract.transfer(destino, ethers.utils.parseUnits("1", "wei"));
+
+    //A:mandamos la transacción pero no se procesó
+
+    recibo = await tx.wait();
+
+    console.log({recibo});
+
+    //A:ahora se procesó
+
+    saldo = await contract.balanceOf(accounts[0]);
+
+    console.log({saldo:ethers.utils.formatEther(saldo)});
+
+})()
+
+
+
+
+</script>
