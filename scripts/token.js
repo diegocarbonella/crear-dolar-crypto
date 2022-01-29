@@ -15,9 +15,13 @@ async function main() {
     console.log("Balance MyWallet: ", await RCPT.balanceOf(SecondWalletAddress));
     console.log("Balance Owner: ", await RCPT.balanceOf(owner.address));
 
-    const result = await RCPT.transfer(SecondWalletAddress, 5);
+    const encolada = await RCPT.transfer(SecondWalletAddress, 5); //A: envia pero no se procesa todavía
 
-    console.log("result", result);
+    console.log("recibida", encolada);
+
+    const resultado = await encolada.wait(); //A: esperamos que se procese
+
+    console.log(resultado);
 
     console.log("Balance MyWallet: ", await RCPT.balanceOf(SecondWalletAddress));
     console.log("Balance Owner: ", await RCPT.balanceOf(owner.address));

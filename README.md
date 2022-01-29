@@ -2,9 +2,9 @@
 
 npx hardhat node # dejar ejecutando el nodo local en una terminal
 
-npx hardhat run scripts/tuto.js --network localhost # desplegar en nodo local, OJO, abrir el nodo antes!
+npx hardhat run scripts/token.js --network localhost # desplegar en nodo local, OJO, abrir el nodo antes!
 
-npx hardhat run scripts/tuto.js --network ropsten # desplegar en ropsten network
+npx hardhat run scripts/token.js --network ropsten # desplegar en ropsten network
 
 npx http-server # para tener un servidor estático
 
