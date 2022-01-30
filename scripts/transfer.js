@@ -1,29 +1,30 @@
 const path = require("path");
 const fs = require("fs-extra")
 
+//este script sirve para hacer transacciones con un contrato ya creado
+//podés hacerlo en ropsten o en localhost
+
 async function main() {
 
     const [owner] = await ethers.getSigners();
 
-    const SecondWalletAddress = "0x86e9fD4703b4b1da9020eF12549FC19D71720813";
-
-    const contract = await ethers.getContractFactory("PodemosCoin");
+    const SecondWalletAddress = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
 
     const contractMeta = await fs.readJson(path.resolve("artifacts/contracts/PodemosCoin.sol/PodemosCoin.json"));
 
     const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
     
-    const contract2 = new ethers.Contract(contractAddress, contractMeta.abi, owner);
+    const contract = new ethers.Contract(contractAddress, contractMeta.abi, owner);
 
-    let saldoOwner = await contract2.balanceOf(owner.address);
+    let saldoOwner = await contract.balanceOf(owner.address);
 
     console.log({saldoOwner:ethers.utils.formatEther(saldoOwner)});
 
-    let SecondWalletSaldo = await contract2.balanceOf(SecondWalletAddress);
+    let SecondWalletSaldo = await contract.balanceOf(SecondWalletAddress);
     
     console.log({SecondWalletSaldo:ethers.utils.formatEther(SecondWalletSaldo)});
 
-    let tx = await contract2.transfer(SecondWalletAddress, 3);
+    let tx = await contract.transfer(SecondWalletAddress, 5);
 
     //A:mandamos la transacción pero no se procesó
 
@@ -31,11 +32,11 @@ async function main() {
 
     //A:ahora se procesó
 
-    saldoOwner = await contract2.balanceOf(owner.address);
+    saldoOwner = await contract.balanceOf(owner.address);
 
     console.log({saldoOwner:ethers.utils.formatEther(saldoOwner)});
 
-    SecondWalletSaldo = await contract2.balanceOf(SecondWalletAddress);
+    SecondWalletSaldo = await contract.balanceOf(SecondWalletAddress);
     
     console.log({SecondWalletSaldo:ethers.utils.formatEther(SecondWalletSaldo)});
 

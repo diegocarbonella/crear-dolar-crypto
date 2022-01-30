@@ -15,9 +15,9 @@ async function main() {
     console.log("Balance MyWallet: ", await RCPT.balanceOf(SecondWalletAddress));
     console.log("Balance Owner: ", await RCPT.balanceOf(owner.address));
 
-    const encolada = await RCPT.transfer(SecondWalletAddress, 5); //A: envia pero no se procesa todavía
+    const encolada = await RCPT.transfer(SecondWalletAddress, 25); //A: envia pero no se procesa todavía
 
-    console.log("recibida", encolada);
+    // console.log("recibida", encolada);
 
     const resultado = await encolada.wait(); //A: esperamos que se procese
 
@@ -25,6 +25,8 @@ async function main() {
 
     console.log("Balance MyWallet: ", await RCPT.balanceOf(SecondWalletAddress));
     console.log("Balance Owner: ", await RCPT.balanceOf(owner.address));
+
+    console.log("https://ropsten.etherscan.io/")
 
 }
  
