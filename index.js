@@ -4,7 +4,7 @@ var getBalance = async function(address, contractAddress) {
 
     const signer = provider.getSigner();
 
-    const contractMeta = await fetch ('/artifacts/contracts/PodemosCoin.sol/PodemosCoin.json').then( r => r.json() )
+    const contractMeta = await fetch ('PodemosCoin.json').then( r => r.json() )
     var contract = new ethers.Contract(contractAddress, contractMeta.abi, signer);
 
     try {
@@ -32,7 +32,7 @@ var sendTransaction = async function(toAddress, quantity, contractAddress) {
     await provider.send("wallet_requestPermissions", [{eth_accounts: {}}]);
     signer = provider.getSigner();
     
-    url = '/artifacts/contracts/PodemosCoin.sol/PodemosCoin.json'
+    url = 'PodemosCoin.json'
     
     contractMeta = await fetch (url).then( r => r.json() )
     
