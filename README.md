@@ -30,3 +30,6 @@ https://docs.metamask.io/guide/getting-started.html#resetting-your-local-nonce-c
 
 0x86e9fD4703b4b1da9020eF12549FC19D71720813
 
+# Probar el contrato y hacer transacciones
+
+https://diegocarbonella.github.io/crear-dolar-crypto/
