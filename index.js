@@ -127,6 +127,18 @@ $(document).ready( async () => {
         
     }
 
+    var provider = new ethers.providers.Web3Provider(window.ethereum);
+    var promptWindowWallets= await provider.send("wallet_requestPermissions", [{eth_accounts:{}}]);
+
+    var accounts = promptWindowWallets[0].caveats[1].value;
+
+    accounts.forEach((a) => {
+        let $option = $("<option>");
+        $option.text(a);
+        $("#from").append($option)
+    
+    })
+
     const network = await getNetwork();
     $("#metamaskNetwork").text("Metamask está conectado a la red " + network);
 
