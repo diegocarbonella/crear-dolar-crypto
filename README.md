@@ -1,5 +1,7 @@
 # Comandos útiles
 
+npx hardhat compile # compila el contrato
+
 npx hardhat node # dejar ejecutando el nodo local en una terminal
 
 npx hardhat run scripts/token.js --network localhost # desplegar en nodo local, OJO, abrir el nodo antes!
