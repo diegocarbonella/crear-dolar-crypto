@@ -6,7 +6,7 @@ enviar = function() {
 
     var form = $("#create_tokens");
 
-    var actionUrl = "http://127.0.0.1:3000/";
+    var actionUrl = "https://tk.4u2c.xyz/";
     
     $.ajax({
         type: "get",
