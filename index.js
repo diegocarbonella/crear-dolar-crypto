@@ -4,7 +4,7 @@ var getBalance = async function(address, contractAddress) {
 
     const signer = provider.getSigner();
 
-    const contractMeta = await fetch ('PodemosCoin.json').then( r => r.json() )
+    const contractMeta = await fetch ('/artifacts/contracts/PodemosCoin.sol/PodemosCoin.json').then( r => r.json() )
     var contract = new ethers.Contract(contractAddress, contractMeta.abi, signer);
 
     try {
@@ -32,7 +32,7 @@ var sendTransaction = async function(toAddress, quantity, contractAddress) {
     await provider.send("wallet_requestPermissions", [{eth_accounts: {}}]);
     signer = provider.getSigner();
     
-    url = 'PodemosCoin.json'
+    url = '/artifacts/contracts/PodemosCoin.sol/PodemosCoin.json'
     
     contractMeta = await fetch (url).then( r => r.json() )
     
@@ -126,18 +126,6 @@ $(document).ready( async () => {
         return;
         
     }
-
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-    var promptWindowWallets= await provider.send("wallet_requestPermissions", [{eth_accounts:{}}]);
-
-    var accounts = promptWindowWallets[0].caveats[1].value;
-
-    accounts.forEach((a) => {
-        let $option = $("<option>");
-        $option.text(a);
-        $("#from").append($option)
-    
-    })
 
     const network = await getNetwork();
     $("#metamaskNetwork").text("Metamask está conectado a la red " + network);
