@@ -10,7 +10,18 @@
 </head>
 <body class = "bg-secondary text-white">
 
-    <div class = "text-center mb-5 mt-1">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapsse navbar-collaps" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="create_tokens.html">Crear tokens</a>
+            <a class="nav-item nav-link" href="index.html">Enviar tokens</a>
+            <a class="nav-item nav-link disabled" href="#">Ver mis tokens</a>
+            <a class="nav-item nav-link" href="https://github.com/diegocarbonella/crear-dolar-crypto">Links con recursos</a>
+          </div>
+        </div>
+    </nav>
+
+    <div class = "text-center mb-5 mt-3">
         <img class = "d-inline-block" style = "width:30px" src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="">
         <label class = "form-text text-white" id = "metamaskNetwork">Metamask está desconectado</label>
     </div>
@@ -23,9 +34,7 @@
         <h4 class ="h4 text-center">Nueva transacción</h4>
  
         <label class = "d-inline-block">Dirección de partida</label>
-        <select class = "w-100 form-select" id = "from">
-        </select>
-
+        <input class = "ds-block w-100 form-control" placeholder = "0x..." id="from">
         <p class = "d-isnline-block form-text text-white">Saldo: <span id= "balanceFrom"></span></p>
     
         <label class = "d-inline-block">Dirección del contrato</label>
