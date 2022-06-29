@@ -56,3 +56,64 @@
 </html>
 
 <script src="index.js"></script>
+
+<script>
+
+$(document).ready( async () => {
+
+if (window.ethereum == undefined) {
+
+    $("#from").attr("disabled", true);
+    $("#to").attr("disabled", true);
+    $("#contract").attr("disabled", true);
+    $("#quantity").attr("disabled", true);
+    $("#send").attr("disabled", true);
+
+    $("#metamaskNetwork").text("Metamask no está instalado");
+    return;
+    
+}
+
+const network = await getNetwork();
+$("#metamaskNetwork").text("Metamask está conectado a la red " + network);
+
+updateFromBalance();
+updateToBalance();
+
+$("#to").change( async () => {
+
+    updateToBalance();
+
+})
+
+$("#network").change( async () => {
+
+    changeNetwork();
+
+})
+
+$("#from").change( async () => {
+
+    updateFromBalance();
+
+})
+
+$("#send").click(async () => {
+
+    let toAddress           = $("#to").val();
+    let quantity            = $("#quantity").val();
+    let contractAddress     = $("#contract").val();
+    let network             = $("#network").val();
+
+    let resultado = await sendTransaction(toAddress, quantity, contractAddress, network);
+
+    console.log("resultado", resultado)
+
+    updateFromBalance();
+    updateToBalance();
+
+})
+
+});
+
+</script>

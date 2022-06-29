@@ -32,18 +32,21 @@
 
             <h4 class ="h4 text-center">Crear token</h4>
     
+            <label class for="d-inline-block">Tipo de token:</label>
+            <br>
+            <select class = "form-select w-100" id="tipoToken" name="tipoToken">
+              <option disabled value="Porciones.sol">Porciones</option>
+              <option disabled value="Votos.sol">Votos</option>
+              <option value="Monedas.sol">Monedas</option>
+              <!-- <option value="Greeter.sol">Saludador</option> -->
+            </select> 
+
             <label class = "d-inline-block">Nombre del token</label>
             <input name = "nombreDelToken" class = "ds-block w-100 form-control" placeholder = "EjemploCoin" id="from">
     
             <label class = "d-inline-block">Abreviación</label>
             <input name = "abreviacion" class = "ds-block w-100 form-control" placeholder = "ECN" id="from">
     
-            <label for="tipoToken">Tipo de token:</label>
-            <select id="tipoToken" name="tipoToken">
-              <option value="Porciones.sol">Porciones</option>
-              <option value="Votos.sol">Votos</option>
-              <option value="Monedas.sol">Monedas</option>
-            </select> 
     
             <label class = "d-inline-block">Cuántas fichas?</label>
             <input id="cantidadFichas" name="cantidadFichas" class = "ds-block w-100 form-control" placeholder = "100" id="from">
@@ -52,9 +55,13 @@
 
         </form>
 
+        <p class = "mt-2" id = "messageResult"></p>
+        <p class = "mt-2" id = "gasPesos"></p>
+
     </div>
     
 </body>
 </html>
 
+<script src="index.js"></script>
 <script src="create_tokens.js"></script>
