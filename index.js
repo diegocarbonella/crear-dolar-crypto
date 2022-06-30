@@ -340,15 +340,27 @@ var podemoscoin = {
 
 var createToken = async function (nombreToken, abreviacion, cantidad) {
 
+    const accounts= window.ethereum.request({ method: 'wallet_requestPermissions', params: [{eth_accounts: {} }] }); //A: volver a pedir account
+
+
+    console.log("createToken1");
+
     provider = new ethers.providers.Web3Provider(window.ethereum);
 
     signer = provider.getSigner();
 
+    console.log("createToken2");
+
     accounts = await provider.listAccounts()
 
-	walletAddress = accounts[0];
+    walletAddress = accounts[0];
+    
+    console.log("createToken3", {walletAddress});
 
     balance = await provider.getBalance(walletAddress);
+
+    console.log("createToken5");
+
 
     factory = new ethers.ContractFactory(podemoscoin.abi, podemoscoin.bytecode, signer);
 
@@ -478,3 +490,10 @@ var changeNetwork = async function() {
 
 }
 
+console.log("hol111");
+
+if (localStorage.tokens2 == undefined) {
+
+  localStorage.setItem("tokens2", "[]");
+
+}

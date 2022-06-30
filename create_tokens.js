@@ -13,14 +13,21 @@ enviar = async function() {
     $("#messageResult").text("Procesando la transacción...");
 
     try {
+
+        console.log("createToken", data[1].value, data[2].value, data[3].value);
         
         contract = await createToken(data[1].value, data[2].value, data[3].value);
         ethereumPrice = 1087.24;
         dollarPrice = 236;
-        gas = parseInt(temp0.deployTransaction.gasPrice._hex);
+        // gas = parseInt(temp0.deployTransaction.gasPrice._hex);
         
         
         $("#messageResult").text("Dirección de contrato " + contract.address);
+
+        // yourTokens = JSON.parse(localStorage.tokens2);
+        // yourTokens.push(contract.address);
+
+        // localStorage.setItem("tokens2", JSON.stringify(yourTokens));
 
         // $("#gasPesos").text("Gastaste $" + ethereumPrice*dollarPrice* pesos + " en GAS.");
 
