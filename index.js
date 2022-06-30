@@ -339,32 +339,32 @@ var podemoscoin = {
 
 
 tokenAddToMetamask= async function (nombreToken, abreviacion, direccion) {
-//FROM: https://docs.metamask.io/guide/rpc-api.html#wallet-watchasset
-await ethereum
-.request({
-  method: 'wallet_watchAsset',
-  params: {
-    type: 'ERC20',
-    options: {
-      address: direccion,
-      symbol: abreviacion,
-      decimals: 1,
-      image: 'https://foo.io/token-image.svg',
-    },
-  },
-})
-.then((success) => {
-  if (success) {
-    alert(abreviacion+" se agrego a tu billetera")
-  } else {
-    throw new Error('Something went wrong.');
-  }
-})
-.catch(alert);
+	//FROM: https://docs.metamask.io/guide/rpc-api.html#wallet-watchasset
+	await ethereum
+	.request({
+	  method: 'wallet_watchAsset',
+	  params: {
+	    type: 'ERC20',
+	    options: {
+	      address: direccion,
+	      symbol: abreviacion,
+	      decimals: 1,
+	      image: 'https://foo.io/token-image.svg',
+	    },
+	  },
+	})
+	.then((success) => {
+	  if (success) {
+	    alert(abreviacion+" se agrego a tu billetera")
+	  } else {
+	    throw new Error('Something went wrong.');
+	  }
+	})
+	.catch(alert);
 }
 
 createToken = async function (nombreToken, abreviacion, cantidad) {
-
+	//TODO: agregar manejo de errores similar a otras funciones
   try {
     paso= "Pedir cuenta";
     const accounts= window.ethereum.request({ method: 'wallet_requestPermissions', params: [{eth_accounts: {} }] }); //A: volver a pedir account
