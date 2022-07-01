@@ -348,7 +348,7 @@ tokenAddToMetamask= async function (nombreToken, abreviacion, direccion) {
 	    options: {
 	      address: direccion,
 	      symbol: abreviacion,
-	      decimals: 1,
+	      decimals: 18,
 	      image: 'https://foo.io/token-image.svg',
 	    },
 	  },
@@ -388,7 +388,8 @@ await provider.send("eth_requestAccounts", []);
     factory = new ethers.ContractFactory(podemoscoin.abi, podemoscoin.bytecode, signer);
 
     paso="Obtener contrato";
-    contract = await factory.deploy(nombreToken, abreviacion, cantidad, walletAddress);
+    cantidadEnWei= ethers.utils.parseEther(cantidad+"")
+    contract = await factory.deploy(nombreToken, abreviacion, cantidadEnWei, walletAddress);
 
 alert("Su cuenta="+walletAddress+" saldo="+balance);
 

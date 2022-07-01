@@ -41,14 +41,14 @@
             </select> 
 
             <label class = "d-inline-block">Nombre del token</label>
-            <input name = "nombreDelToken" class = "ds-block w-100 form-control" placeholder = "EjemploCoin" id="from">
+            <input name = "nombreDelToken" class = "ds-block w-100 form-control" placeholder = "EjemploCoin" id="from" maxlength="6">
     
             <label class = "d-inline-block">Abreviación</label>
-            <input name = "abreviacion" class = "ds-block w-100 form-control" placeholder = "ECN" id="from">
+            <input name = "abreviacion" class = "ds-block w-100 form-control" placeholder = "ECN" id="from" maxlength="3">
     
     
             <label class = "d-inline-block">Cuántas fichas?</label>
-            <input id="cantidadFichas" name="cantidadFichas" class = "ds-block w-100 form-control" placeholder = "100" id="from">
+            <input id="cantidadFichas" name="cantidadFichas" class = "ds-block w-100 form-control" value = "1000" id="from">
     
             <button onclick="enviar()" class="btn btn-success form-text text-white">Enviar</button>
 
