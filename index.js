@@ -363,7 +363,7 @@ tokenAddToMetamask= async function (nombreToken, abreviacion, direccion) {
 	.catch(alert);
 }
 
-walletConectar = async function () {
+walletConectar = async function () { //U: llamar SIEMPRE para conectar la wallet
 	//TODO: agregar manejo de errores similar a otras funciones
   try {
     paso= "Pedir cuenta";
@@ -384,17 +384,18 @@ walletConectar = async function () {
     paso="Obtener saldo";
     balance = await provider.getBalance(walletAddress);
 
-		alert("Su cuenta="+walletAddress+" saldo="+balance);
+    alert("Su cuenta="+walletAddress+" saldo="+balance);
+    return {signer, walletAddress, balance}
 
-	} catch (ex) {
-		alert("Error conectando wallet paso="+paso)
-		throw ex;
-	}
+  } catch (ex) {
+    alert("Error conectando wallet paso="+paso)
+    throw ex;
+  }
 }
 
 createToken = async function (nombreToken, abreviacion, cantidad) {
   try {
-		await walletConectar()
+    await walletConectar()
 
     paso="Obtener factory";
     factory = new ethers.ContractFactory(podemoscoin.abi, podemoscoin.bytecode, signer);
@@ -402,6 +403,13 @@ createToken = async function (nombreToken, abreviacion, cantidad) {
     paso="Obtener contrato";
     cantidadEnWei= ethers.utils.parseEther(cantidad+"")
     contract = await factory.deploy(nombreToken, abreviacion, cantidadEnWei, walletAddress);
+
+    try {
+       tokenDbGuardar(walletAddress,contract.address, nombreToken)
+    }
+    catch (ex) {
+       alert("Error registrando token en nuestra base de datos.\nGuardalo en Metamask");
+    }
 
     tokenAddToMetamask(nombreToken, abreviacion, contract.address)
     return contract;
@@ -523,10 +531,21 @@ var changeNetwork = async function() {
 
 }
 
-console.log("hol111");
-
-if (localStorage.tokens2 == undefined) {
-
-localStorage.setItem("tokens2", "[]");
-
+tokenDbBuscar= async function() {
+  await walletConectar();
+  tokensCreados= await fetch('t.php',{
+	method:'POST', 
+	headers: { 'Content-Type': 'application/x-www-form-urlencoded', },
+	body: 'c='+walletAddress
+  }).then(r=>r.json())
+  return tokensCreados;
 }
+
+tokenDbGuardar= async function(creador_addr, token_addr, token_desc) {
+  tokensCreados= await fetch('t.php',{
+	method:'POST', 
+	headers: { 'Content-Type': 'application/x-www-form-urlencoded', },
+	body: 'c='+creador_addr+'&t='+token_addr+'&d='+token_desc
+  }).then(r=>r.json())
+}
+

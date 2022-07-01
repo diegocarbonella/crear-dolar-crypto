@@ -25,6 +25,7 @@
         <img class = "d-inline-block" style = "width:30px" src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="">
         <label class = "form-text text-white" id = "metamaskNetwork">Metamask está desconectado</label>
     </div>
+    <button onclick="buscarYmostrar()">Reconectar</button>
 
     <div id = "misTokens">
 
@@ -52,15 +53,11 @@ $("#metamaskNetwork").text("Metamask está conectado a la red " + network);
 
 });
 
-
-JSON.parse(localStorage.tokens2).forEach(function(a,b){
-
-	console.log(a)
-	address = $("<p>").text(a);
-	$("#misTokens").append(address);
-
-})
-
+async function buscarYmostrar() {
+	tokens= await tokenDbBuscar();
+	html= "<ul>" + tokens.map(t => ("<li>"+t.token_desc+": "+t.token_addr+"</li>")).join("\n")+"</ul>";
+	$("#misTokens").html(html)
+}
 </script>
 </body>
 </html>
