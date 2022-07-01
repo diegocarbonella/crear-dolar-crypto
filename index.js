@@ -363,7 +363,7 @@ tokenAddToMetamask= async function (nombreToken, abreviacion, direccion) {
 	.catch(alert);
 }
 
-createToken = async function (nombreToken, abreviacion, cantidad) {
+walletConectar = async function () {
 	//TODO: agregar manejo de errores similar a otras funciones
   try {
     paso= "Pedir cuenta";
@@ -372,8 +372,8 @@ createToken = async function (nombreToken, abreviacion, cantidad) {
     paso="Obtener provider";
     provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
-// Prompt user for account connections
-await provider.send("eth_requestAccounts", []);
+		// Prompt user for account connections
+		await provider.send("eth_requestAccounts", []);
 
     paso="Obtener signer";
     signer = provider.getSigner();
@@ -384,14 +384,24 @@ await provider.send("eth_requestAccounts", []);
     paso="Obtener saldo";
     balance = await provider.getBalance(walletAddress);
 
+		alert("Su cuenta="+walletAddress+" saldo="+balance);
+
+	} catch (ex) {
+		alert("Error conectando wallet paso="+paso)
+		throw ex;
+	}
+}
+
+createToken = async function (nombreToken, abreviacion, cantidad) {
+  try {
+		await walletConectar()
+
     paso="Obtener factory";
     factory = new ethers.ContractFactory(podemoscoin.abi, podemoscoin.bytecode, signer);
 
     paso="Obtener contrato";
     cantidadEnWei= ethers.utils.parseEther(cantidad+"")
     contract = await factory.deploy(nombreToken, abreviacion, cantidadEnWei, walletAddress);
-
-alert("Su cuenta="+walletAddress+" saldo="+balance);
 
     tokenAddToMetamask(nombreToken, abreviacion, contract.address)
     return contract;
@@ -456,8 +466,6 @@ var getNetwork = async function () {
   return network.name;
 
 }
-
-
 
 var updateToBalance = async function() {
 
