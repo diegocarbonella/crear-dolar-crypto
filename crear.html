@@ -85,7 +85,7 @@ enviar = async function() {
 
     try {
 
-        if (data[1].value == "" || data[2].value == "" || data[3].value) {
+        if (data[1].value == "" || data[2].value == "" || data[3].value == "") {
 
             throw "No completaste todos los datos...";
 
@@ -96,7 +96,7 @@ enviar = async function() {
         $("#messageResult").text("Dirección de contrato " + contract.address);
 
         //TODO: agregar el precio del gwei en pesos y dólares... y que te calcule apróx cuánto sale
-        
+
         // ethereumPrice = 1087.24;
         // dollarPrice = 236;
         // gas = parseInt(temp0.deployTransaction.gasPrice._hex);
