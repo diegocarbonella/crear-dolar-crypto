@@ -1,3 +1,7 @@
+function notify(text) {
+  $("#notifications").text(text);
+}
+
 PodemosCoin = '';
 
 async function load() {
@@ -26,7 +30,7 @@ tokenAddToMetamask= async function (nombreToken, abreviacion, direccion) {
 	})
 	.then((success) => {
 	  if (success) {
-	    alert(abreviacion+" se agrego a tu billetera")
+	    notify(abreviacion+" se agrego a tu billetera")
 	  } else {
 	    throw new Error('Something went wrong.');
 	  }
@@ -55,11 +59,11 @@ walletConectar = async function () { //U: llamar SIEMPRE para conectar la wallet
     paso="Obtener saldo";
     balance = await provider.getBalance(walletAddress);
 
-    alert("Su cuenta="+walletAddress+" saldo="+balance);
+    notify("Su cuenta="+walletAddress+" saldo="+balance);
     return {signer, walletAddress, balance}
 
   } catch (ex) {
-    alert("Error conectando wallet paso="+paso)
+    notify("Error conectando wallet paso="+paso)
     throw ex;
   }
 }
@@ -79,13 +83,13 @@ createToken = async function (nombreToken, abreviacion, cantidad) {
        tokenDbGuardar(walletAddress,contract.address, nombreToken)
     }
     catch (ex) {
-       alert("Error registrando token en nuestra base de datos.\nGuardalo en Metamask");
+       notify("Error registrando token en nuestra base de datos.\nGuardalo en Metamask");
     }
 
     tokenAddToMetamask(nombreToken, abreviacion, contract.address)
     return contract;
 } catch(ex) {
-  alert("Error creando token paso="+paso);
+  notify("Error creando token paso="+paso);
 }
 }
 
