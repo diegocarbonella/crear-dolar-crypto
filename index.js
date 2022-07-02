@@ -41,23 +41,37 @@ tokenAddToMetamask= async function (nombreToken, abreviacion, direccion) {
 walletConectar = async function () { //U: llamar SIEMPRE para conectar la wallet
 	//TODO: agregar manejo de errores similar a otras funciones
   try {
+    console.log("d1");
     paso= "Pedir cuenta";
     const accounts= window.ethereum.request({ method: 'wallet_requestPermissions', params: [{eth_accounts: {} }] }); //A: volver a pedir account
 
     paso="Obtener provider";
+    console.log("d2");
+
     provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
 		// Prompt user for account connections
 		await provider.send("eth_requestAccounts", []);
 
     paso="Obtener signer";
+    console.log("d3");
+
     signer = provider.getSigner();
 
     paso="Obtener cuentas";
+    console.log("d4");
+
     walletAddress= await signer.getAddress();
   
     paso="Obtener saldo";
+    console.log("d5");
+
     balance = await provider.getBalance(walletAddress);
+
+    console.log("d6");
+
+    console.log({signer, walletAddress, balance});
+
 
     notify("Su cuenta="+walletAddress+" saldo="+balance);
     return {signer, walletAddress, balance}
