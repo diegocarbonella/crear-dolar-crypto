@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Tokens</title>
+    <title>Ver mis Tokens</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
 </head>
-<body class = "bg-secondary text-white">
+<body class = "text-white">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapsse navbar-collaps" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="index.html">Ver mis tokens</a>
+            <a class="nav-item nav-link active" href="index.html">Ver mis tokens</a>
             <a class="nav-item nav-link" href="enviar.html">Enviar tokens</a>
-            <a class="nav-item nav-link active" href="crear.html">Crear tokens</a>
+            <a class="nav-item nav-link" href="crear.html">Crear tokens</a>
+            <a class="nav-item nav-link" href="https://faucet.egorfine.com/">Faucet</a>
           </div>
         </div>
     </nav>
 
+    <div class = "text-center mb-3 mt-3">
+      <label class = "form-text text-white" id = "metamaskNetwork">Metamask está desconectado</label>
+      <br>
+      <button class = "mt-3 text-white p-2" style = "background-color: #410D2E; border: 0px;" onclick="buscarYmostrar()">
+          <img class = "d-inline-block" style = "width:30px; background-color: #410D2E" src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="">
+          Reconectar
+      </button>
+  </div>
 
-    <div class = "text-center mb-5 mt-3">
-        <img class = "d-inline-block" style = "width:30px" src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="">
-        <label class = "form-text text-white" id = "metamaskNetwork">Metamask está desconectado</label>
+    <div class = "container">
+      <div class = "row" id = "misTokens">
+      </div>
     </div>
-    <button onclick="buscarYmostrar()">Reconectar</button>
 
-    <div id = "misTokens">
-
-    </div>
 <script src="index.js"></script>
 <script>
 
@@ -55,12 +61,21 @@ $("#metamaskNetwork").text("Metamask está conectado a la red " + network);
 
 async function buscarYmostrar() {
 	tokens= await tokenDbBuscar();
-	html= "<ul>" + tokens.map(t => ("<li>"+t.token_desc+": "+t.token_addr+"</li>")).join("\n")+"</ul>";
-	$("#misTokens").html(html)
+
+	tokens.forEach(function(token){
+		tokenCard = $("<div>").addClass("col-md-6 col-12 tokenCard")
+		tokenName = $("<p>").text(token.token_desc).addClass("tokenName p-3")
+    tokenAddress = $("<p>").text(token.token_addr).addClass("tokenAddress p-3");
+    copiarDirección = $("<p>").text("Copiar").addClass("d-inline-block p-3");
+    copiarDirección.on("click",function(){
+      navigator.clipboard.writeText(token.token_addr);
+    })
+    verEnRopsten = $("<a>").text("Ver en etherscan").attr("href","https://ropsten.etherscan.io/token/" + token.token_addr).addClass("d-inline-block text-white");
+		tokenCard.append(tokenName, tokenAddress, copiarDirección, verEnRopsten);
+		$("#misTokens").append(tokenCard);
+	})
+
 }
 </script>
 </body>
 </html>
-
-
-
